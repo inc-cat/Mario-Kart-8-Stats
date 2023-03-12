@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { getScores } from './api';
 import { useState, useEffect } from 'react';
+import { CsvToHtmlTable } from 'react-csv-to-table';
 
 function App() {
   const [gameArray, setGameArray] = useState([]);
@@ -16,7 +17,16 @@ function App() {
     fetchData();
   }, []);
 
-  return <pre>{csvContent}</pre>;
+  return (
+    <div style={{ overflowY: 'scroll', height: '400px', width: 'fit-content' }}>
+      <CsvToHtmlTable
+        data={csvContent}
+        csvDelimiter=","
+        tableClassName="Mario Kart 8"
+        hasHeader={true}
+      />
+    </div>
+  );
 }
 
 export default App;

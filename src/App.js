@@ -2,8 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { getScores } from './api';
 import { useState, useEffect } from 'react';
-import { CsvToHtmlTable } from 'react-csv-to-table';
-import { parse } from 'csv-parse';
+import { parse } from 'csv-parse/browser/esm/sync';
 
 function App() {
   const [gameArray, setGameArray] = useState([]);
@@ -18,52 +17,40 @@ function App() {
     fetchData();
   }, []);
 
-  const parsedScores = parse(csvContent, {
-    columns: true,
-    skip_empty_lines: true,
-  });
+  useEffect(() => {
+    const parsedScores = parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+    });
+    setGameArray(parsedScores);
+  }, [csvContent]);
 
+  console.log(gameArray);
   return (
-    <div style={{ overflowY: 'scroll', height: '400px', width: 'fit-content' }}>
-      {/* <CsvToHtmlTable
-        data={csvContent}
-        csvDelimiter=","
-        tableClassName="Mario Kart 8"
-        hasHeader={true}
-      /> */}
-
-      <pre>{parsedScores[0]}</pre>
-      {/* 
-      <table style="width:100%">
+    <div style={{ overflowY: 'scroll', height: '500px', width: 'fit-content' }}>
+      {/* <pre>{JSON.stringify(gameArray[5])}</pre> */}
+      <table>
         <tr>
-          <th>Company</th>
-          <th>Contact</th>
-          <th>Country</th>
+          <th>Course</th>
+          <th>CC</th>
+          <th>GP</th>
+          <th>inc</th>
+          <th>Evie</th>
         </tr>
-      </table> */}
+        {gameArray.map(function (entry) {
+          return (
+            <tr>
+              <td>{entry.Course}</td>
+              <td>{entry.CC}</td>
+              <td>{entry.GP}</td>
+              <td>{entry.inc}</td>
+              <td>{entry.Evie}</td>
+            </tr>
+          );
+        })}
+      </table>
     </div>
   );
 }
 
 export default App;
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }

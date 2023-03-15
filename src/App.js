@@ -3,6 +3,7 @@ import './App.css';
 import { getScores } from './api';
 import { useState, useEffect } from 'react';
 import { CsvToHtmlTable } from 'react-csv-to-table';
+import { parse } from 'csv-parse';
 
 function App() {
   const [gameArray, setGameArray] = useState([]);
@@ -17,14 +18,29 @@ function App() {
     fetchData();
   }, []);
 
+  const parsedScores = parse(csvContent, {
+    columns: true,
+    skip_empty_lines: true,
+  });
+
   return (
     <div style={{ overflowY: 'scroll', height: '400px', width: 'fit-content' }}>
-      <CsvToHtmlTable
+      {/* <CsvToHtmlTable
         data={csvContent}
         csvDelimiter=","
         tableClassName="Mario Kart 8"
         hasHeader={true}
-      />
+      /> */}
+
+      <pre>{parsedScores[0]}</pre>
+      {/* 
+      <table style="width:100%">
+        <tr>
+          <th>Company</th>
+          <th>Contact</th>
+          <th>Country</th>
+        </tr>
+      </table> */}
     </div>
   );
 }

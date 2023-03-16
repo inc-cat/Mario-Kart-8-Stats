@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { getScores } from './api';
-import { useState, useEffect, react } from 'react';
+import { useState, useEffect } from 'react';
 import { parse } from 'csv-parse/browser/esm/sync';
 
 function App() {
@@ -9,14 +9,33 @@ function App() {
   const [csvContent, setCsvContent] = useState('');
   const [courseList, setCourseList] = useState([]);
   const [chosenCourse, setChosenCourse] = useState(null);
+  const [chosenCC, setChosenCC] = useState(null);
+  const [ccList, setCCList] = useState([]);
+  const [chosenGP, setChosenGP] = useState(null);
+  const [gpList, setGPList] = useState([]);
 
-  const scores = gameArray.filter(function (row) {
-    if (!chosenCourse) {
-      return true;
-    }
-    return row.Course === chosenCourse;
-  });
+  // Search query trigger for Course
+  const scores = gameArray
+    .filter(function (row) {
+      if (!chosenCourse || chosenCourse === '--All courses--') {
+        return true;
+      }
+      return row.Course === chosenCourse;
+    })
+    .filter(function (row) {
+      if (!chosenCC || chosenCC === '--All CC--') {
+        return true;
+      }
+      return row.CC === chosenCC;
+    })
+    .filter(function (row) {
+      if (!chosenGP || chosenGP === '--All GP--') {
+        return true;
+      }
+      return row.GP === chosenGP;
+    });
 
+  // Getting all queries from the csv course column
   useEffect(
     function () {
       const getCourses = new Set(
@@ -26,12 +45,32 @@ function App() {
           })
           .sort()
       );
+
+      const getCC = new Set(
+        gameArray
+          .map(function (roww) {
+            return roww.CC;
+          })
+          .sort()
+      );
+
+      const getGP = new Set(
+        gameArray
+          .map(function (row) {
+            return row.GP;
+          })
+          .sort()
+      );
+
       console.log(getCourses);
-      setCourseList([...getCourses]);
+      setCourseList(['--All courses--'].concat([...getCourses]));
+      setCCList(['--All CC--'].concat([...getCC]));
+      setGPList(['--All GP--'].concat([...getGP]));
     },
     [gameArray]
   );
 
+  // Getting data from the api
   useEffect(() => {
     async function fetchData() {
       const tmpScores = await getScores();
@@ -40,6 +79,7 @@ function App() {
     fetchData();
   }, []);
 
+  // Parses data to JSON to be iterated
   useEffect(() => {
     const parsedScores = parse(csvContent, {
       columns: true,
@@ -49,7 +89,8 @@ function App() {
   }, [csvContent]);
 
   // console.log(gameArray);
-  console.log(chosenCourse);
+  // console.log(chosenCourse);
+
   return (
     <>
       <div
@@ -87,11 +128,21 @@ function App() {
             return <option value={null}>{course}</option>;
           })}
         </select>
-        <select>
+        <select value={chosenCC} onChange={(e) => setChosenCC(e.target.value)}>
+          {ccList.map(function (cc) {
+            return <option value={null}>{cc}</option>;
+          })}
+        </select>
+        <select value={chosenGP} onChange={(e) => setChosenGP(e.target.value)}>
+          {gpList.map(function (gp) {
+            return <option value={null}>{gp}</option>;
+          })}
+        </select>
+        {/* <select>
           <option value="fruit">Fruit</option>
           <option value="vegetable">Vegetable</option>
           <option value="meat">Meat</option>
-        </select>
+        </select> */}
       </div>
     </>
   );

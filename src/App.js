@@ -4,6 +4,25 @@ import { getScores } from './api';
 import { useState, useEffect } from 'react';
 import { parse } from 'csv-parse/browser/esm/sync';
 
+function positionToScore(position) {
+  const positions = {
+    1: 15,
+    2: 12,
+    3: 10,
+    4: 9,
+    5: 8,
+    6: 7,
+    7: 6,
+    8: 5,
+    9: 4,
+    10: 3,
+    11: 2,
+    12: 1,
+  };
+
+  return positions[position];
+}
+
 function App() {
   const [gameArray, setGameArray] = useState([]);
   const [csvContent, setCsvContent] = useState('');
@@ -34,6 +53,14 @@ function App() {
       }
       return row.GP === chosenGP;
     });
+
+  scores.forEach(function (row, i, arr) {
+    const previousRow = arr[i - 1];
+    row.incCumScore =
+      (previousRow?.incCumScore || 0) + positionToScore(row.inc);
+    row.EvieCumScore =
+      (previousRow?.EvieCumScore || 0) + positionToScore(row.Evie);
+  });
 
   // Getting all queries from the csv course column
   useEffect(
@@ -104,6 +131,8 @@ function App() {
             <th>GP</th>
             <th>inc</th>
             <th>Evie</th>
+            <th>Score inc</th>
+            <th>Score Evie</th>
           </tr>
           {scores.map(function (entry, i) {
             return (
@@ -113,6 +142,8 @@ function App() {
                 <td>{entry.GP}</td>
                 <td>{entry.inc}</td>
                 <td>{entry.Evie}</td>
+                <td>{entry.incCumScore}</td>
+                <td>{entry.EvieCumScore}</td>
               </tr>
             );
           })}

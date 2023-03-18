@@ -3,6 +3,26 @@ import './App.css';
 import { getScores } from './api';
 import { useState, useEffect } from 'react';
 import { parse } from 'csv-parse/browser/esm/sync';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from 'chart.js';
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 
 function positionToScore(position) {
   const positions = {
@@ -56,10 +76,23 @@ function App() {
 
   scores.forEach(function (row, i, arr) {
     const previousRow = arr[i - 1];
+    const positional = i + 1;
+
     row.incCumScore =
       (previousRow?.incCumScore || 0) + positionToScore(row.inc);
+
     row.EvieCumScore =
       (previousRow?.EvieCumScore || 0) + positionToScore(row.Evie);
+
+    row.incAveragePlace = (
+      ((previousRow?.incAveragePlace || 0) * i + +row.inc) /
+      positional
+    ).toFixed(2);
+
+    row.EvieAveragePlace = (
+      ((previousRow?.EvieAveragePlace || 0) * i + +row.Evie) /
+      positional
+    ).toFixed(2);
   });
 
   // Getting all queries from the csv course column
@@ -118,32 +151,71 @@ function App() {
   // console.log(gameArray);
   // console.log(chosenCourse);
 
+  const old_data = [
+    {
+      label: 'React Charts',
+      data: [
+        {
+          date: new Date(),
+          stars: 202123,
+        },
+        // ...
+      ],
+    },
+  ];
+
+  const data = {
+    labels: scores.map((_, i) => i),
+    datasets: [
+      {
+        label: 'inc',
+        data: scores.map((entry) => entry.incAveragePlace),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Evie',
+        data: scores.map((entry) => entry.EvieAveragePlace),
+        borderColor: 'darkgreen',
+        backgroundColor: 'lightgreen',
+      },
+    ],
+  };
+
   return (
     <>
+      <div style={{ width: '1000px' }}>
+        <Line data={data} />
+      </div>
+
       <div
-        style={{ overflowY: 'scroll', height: '500px', width: 'fit-content' }}
+        style={{ overflowY: 'scroll', height: '800px', width: 'fit-content' }}
       >
         {/* <pre>{JSON.stringify(gameArray[5])}</pre> */}
         <table>
           <tr>
-            <th>Course</th>
             <th>CC</th>
             <th>GP</th>
-            <th>inc</th>
-            <th>Evie</th>
-            <th>Score inc</th>
-            <th>Score Evie</th>
+            <th>Course</th>
+            <th>inc position</th>
+            <th>Evie position</th>
+            <th>inc score</th>
+            <th>Evie score</th>
+            <th>inc average position</th>
+            <th>Evie average position</th>
           </tr>
           {scores.map(function (entry, i) {
             return (
               <tr key={i}>
-                <td>{entry.Course}</td>
                 <td>{entry.CC}</td>
                 <td>{entry.GP}</td>
+                <td>{entry.Course}</td>
                 <td>{entry.inc}</td>
                 <td>{entry.Evie}</td>
                 <td>{entry.incCumScore}</td>
                 <td>{entry.EvieCumScore}</td>
+                <td>{entry.incAveragePlace}</td>
+                <td>{entry.EvieAveragePlace}</td>
               </tr>
             );
           })}

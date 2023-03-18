@@ -4,6 +4,7 @@ import { getScores } from './api';
 import { useState, useEffect } from 'react';
 import { parse } from 'csv-parse/browser/esm/sync';
 import { Line } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -164,20 +165,43 @@ function App() {
     },
   ];
 
+  const options = {
+    type: 'invertedLine',
+    scales: {
+      y: { reverse: true },
+    },
+  };
+
   const data = {
     labels: scores.map((_, i) => i),
     datasets: [
       {
-        label: 'inc',
+        label: 'inc average',
         data: scores.map((entry) => entry.incAveragePlace),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        pointStyle: false,
       },
       {
-        label: 'Evie',
+        label: 'Evie average',
         data: scores.map((entry) => entry.EvieAveragePlace),
         borderColor: 'darkgreen',
         backgroundColor: 'lightgreen',
+        pointStyle: false,
+      },
+      {
+        label: 'inc',
+        data: scores.map((entry) => entry.inc),
+        borderColor: 'grey',
+        backgroundColor: 'grey',
+        showLine: false,
+      },
+      {
+        label: 'Evie',
+        data: scores.map((entry) => entry.Evie),
+        borderColor: 'purple',
+        backgroundColor: 'purple',
+        showLine: false,
       },
     ],
   };
@@ -185,7 +209,7 @@ function App() {
   return (
     <>
       <div style={{ width: '1000px' }}>
-        <Line data={data} />
+        <Line data={data} options={options} />
       </div>
 
       <div

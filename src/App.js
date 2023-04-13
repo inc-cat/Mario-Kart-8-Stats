@@ -75,9 +75,30 @@ function App() {
       return row.GP === chosenGP;
     });
 
+  let evieWin = 0;
+  let incWin = 0;
+  let eviePodium = 0;
+  let incPodium = 0;
+
   scores.forEach(function (row, i, arr) {
     const previousRow = arr[i - 1];
     const positional = i + 1;
+
+    if (row.inc == 1) {
+      incWin++;
+    }
+
+    if (row.Evie == 1) {
+      evieWin++;
+    }
+
+    if (row.Evie < 4) {
+      eviePodium++;
+    }
+
+    if (row.inc < 4) {
+      incPodium++;
+    }
 
     row.incCumScore =
       (previousRow?.incCumScore || 0) + positionToScore(row.inc);
@@ -95,6 +116,8 @@ function App() {
       positional
     ).toFixed(2);
   });
+
+  useEffect(function () {});
 
   // Getting all queries from the csv course column
   useEffect(
@@ -251,6 +274,7 @@ function App() {
           value={chosenCourse}
           onChange={(e) => setChosenCourse(e.target.value)}
         >
+          otal games played: 160
           {courseList.map(function (course) {
             return <option value={null}>{course}</option>;
           })}
@@ -270,6 +294,28 @@ function App() {
           <option value="vegetable">Vegetable</option>
           <option value="meat">Meat</option>
         </select> */}
+      </div>
+      <div>
+        <p>
+          {scores.length === gameArray.length ? 'Total' : 'Selected'} games
+          played: {scores.length}
+        </p>
+        <p>
+          Evie 1st positions: <b>{evieWin}</b> (
+          {((evieWin / scores.length) * 100).toFixed(2)}%)
+        </p>
+        <p>
+          Evie podium positions: <b>{eviePodium}</b> (
+          {((eviePodium / scores.length) * 100).toFixed(2)}%)
+        </p>
+        <p>
+          inc 1st positions: <b>{incWin}</b> (
+          {((incWin / scores.length) * 100).toFixed(2)}%)
+        </p>
+        <p>
+          inc podium positions: <b>{incPodium}</b> (
+          {((incPodium / scores.length) * 100).toFixed(2)}%)
+        </p>
       </div>
     </>
   );

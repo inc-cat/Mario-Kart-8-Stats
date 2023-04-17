@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  width: fit-content;
+  margin: auto;
+  background: white;
+  padding: 10px;
+  background-color: aliceblue;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-centre {
+  text-align: center;
+}
+
+.odd {
+  background-color: rgba(192, 192, 192, 0.2);
+}

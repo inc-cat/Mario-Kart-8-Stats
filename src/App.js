@@ -231,70 +231,78 @@ function App() {
 
   return (
     <>
-      <div style={{ width: '1000px' }}>
-        <Line data={data} options={options} />
-      </div>
+      <div style={{ width: 'fit-content' }}>
+        <div style={{ width: '1000px' }}>
+          <Line data={data} options={options} />
+        </div>
 
-      <div
-        style={{ overflowY: 'scroll', height: '800px', width: 'fit-content' }}
-      >
-        {/* <pre>{JSON.stringify(gameArray[5])}</pre> */}
-        <table>
-          <tr>
-            <th>CC</th>
-            <th>GP</th>
-            <th>Course</th>
-            <th>inc position</th>
-            <th>Evie position</th>
-            <th>inc score</th>
-            <th>Evie score</th>
-            <th>inc average position</th>
-            <th>Evie average position</th>
-          </tr>
-          {scores.map(function (entry, i) {
-            return (
-              <tr key={i}>
-                <td>{entry.CC}</td>
-                <td>{entry.GP}</td>
-                <td>{entry.Course}</td>
-                <td>{entry.inc}</td>
-                <td>{entry.Evie}</td>
-                <td>{entry.incCumScore}</td>
-                <td>{entry.EvieCumScore}</td>
-                <td>{entry.incAveragePlace}</td>
-                <td>{entry.EvieAveragePlace}</td>
-              </tr>
-            );
-          })}
-        </table>
-      </div>
-
-      <div>
-        <select
-          value={chosenCourse}
-          onChange={(e) => setChosenCourse(e.target.value)}
-        >
-          otal games played: 160
-          {courseList.map(function (course) {
-            return <option value={null}>{course}</option>;
-          })}
-        </select>
-        <select value={chosenCC} onChange={(e) => setChosenCC(e.target.value)}>
-          {ccList.map(function (cc) {
-            return <option value={null}>{cc}</option>;
-          })}
-        </select>
-        <select value={chosenGP} onChange={(e) => setChosenGP(e.target.value)}>
-          {gpList.map(function (gp) {
-            return <option value={null}>{gp}</option>;
-          })}
-        </select>
-        {/* <select>
+        <div>
+          <select
+            value={chosenCourse}
+            onChange={(e) => setChosenCourse(e.target.value)}
+          >
+            otal games played: 160
+            {courseList.map(function (course) {
+              return <option value={null}>{course}</option>;
+            })}
+          </select>
+          <select
+            value={chosenCC}
+            onChange={(e) => setChosenCC(e.target.value)}
+          >
+            {ccList.map(function (cc) {
+              return <option value={null}>{cc}</option>;
+            })}
+          </select>
+          <select
+            value={chosenGP}
+            onChange={(e) => setChosenGP(e.target.value)}
+          >
+            {gpList.map(function (gp) {
+              return <option value={null}>{gp}</option>;
+            })}
+          </select>
+          {/* <select>
           <option value="fruit">Fruit</option>
           <option value="vegetable">Vegetable</option>
           <option value="meat">Meat</option>
         </select> */}
+        </div>
+        <br></br>
+
+        <div style={{ overflowY: 'scroll', height: '800px', width: '100%' }}>
+          {/* <pre>{JSON.stringify(gameArray[5])}</pre> */}
+          <table>
+            <tr>
+              <th>CC</th>
+              <th>GP</th>
+              <th>Course</th>
+              <th>inc position</th>
+              <th>Evie position</th>
+              <th>inc score</th>
+              <th>Evie score</th>
+              <th>inc average position</th>
+              <th>Evie average position</th>
+            </tr>
+            {scores.map(function (entry, i) {
+              return (
+                <tr key={i} className={i % 2 == 0 ? 'even' : 'odd'}>
+                  <td className="align-centre">{entry.CC}</td>
+                  <td className="align-centre">{entry.GP}</td>
+                  <td className="align-centre">{entry.Course}</td>
+                  <td className="align-right">{entry.inc}</td>
+                  <td className="align-right">{entry.Evie}</td>
+                  <td className="align-right">{entry.incCumScore}</td>
+                  <td className="align-right">{entry.EvieCumScore}</td>
+                  <td className="align-right">{entry.incAveragePlace}</td>
+                  <td className="align-right">{entry.EvieAveragePlace}</td>
+                </tr>
+              );
+            })}
+          </table>
+        </div>
       </div>
+
       <div>
         <p>
           {scores.length === gameArray.length ? 'Total' : 'Selected'} games

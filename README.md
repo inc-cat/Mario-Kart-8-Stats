@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# Evie and inc play Mario Kart!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+Evie and inc have been playing [Mario Kart 8 Deluxe](https://www.nintendo.co.uk/Games/Nintendo-Switch-games/Mario-Kart-8-Deluxe-1173281.html) and have wanted to settle the dispute of who is the better of the two once and for all.
 
-In the project directory, you can run:
+Mario Kart 8 is a kart racing game where players control characters from the Mario universe to race in go-karts around specified courses. They may hinder their opponents or improve their performance using power-ups found in item boxes throughout the course. It includes four different difficulties, each differing in speed, which may be selected before the race. "Mirror Mode" horizontally inverts all courses.
 
-### `npm start`
+## Races and results
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Typically races have 12 participants and the higher a player places at the end of the race, the more points a player will earn.
+Point distributions are as follows:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Position | Points awarded |
+| -------- | -------------- |
+| 1st      | 15             |
+| 2nd      | 12             |
+| 3rd      | 10             |
+| 4th      | 9              |
+| 5th      | 8              |
+| 6th      | 7              |
+| 7th      | 6              |
+| 8th      | 5              |
+| 9th      | 4              |
+| 10th     | 3              |
+| 11th     | 2              |
+| 12th     | 1              |
 
-### `npm test`
+## Recording and displaying scores
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Scores will be put in a CSV file before being parsed and processed to be analysed by interactive graphing libraries within ReactJS.
+- Filter menus are available to sort through results.
+- Statistical informational will be at the bottom of the page.
 
-### `npm run build`
+### Regulations for recording scores
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Standard grand Prixs have 4 races, though vs races will have the option to have more. To be counted in this socresheet, vs races must be Hard difficulty, standard items with 4 races only. All standard Grand Prixs are accepted by default.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Notes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Scores and code will be updated with each game played.
+- Code is easily refactored for the use of any other data source.
+- Made with [JavaScript](https://en.wikipedia.org/wiki/JavaScript), [ReactJS](https://react.dev/) and [Create React App](https://github.com/facebook/create-react-app).
